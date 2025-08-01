@@ -154,7 +154,7 @@ class K8sOperations:
                 "message": f"Unexpected error: {e}",
             }
 
-    def delete_resource(self, kind: str, name: str, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def delete_resource(self, kind: str, name: str, namespace: str) -> Dict[str, Any]:
         """Delete a resource.
         
         Args:
@@ -188,7 +188,7 @@ class K8sOperations:
                 "message": f"Unexpected error: {e}",
             }
 
-    def scale_deployment(self, name: str, replicas: int, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def scale_deployment(self, name: str, replicas: int, namespace: str) -> Dict[str, Any]:
         """Scale a deployment.
         
         Args:
@@ -226,7 +226,7 @@ class K8sOperations:
                 "message": f"Unexpected error: {e}",
             }
 
-    def restart_deployment(self, name: str, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def restart_deployment(self, name: str, namespace: str) -> Dict[str, Any]:
         """Restart a deployment.
         
         Args:
@@ -276,7 +276,7 @@ class K8sOperations:
                 "message": f"Unexpected error: {e}",
             }
 
-    def execute_command(self, pod_name: str, command: List[str], namespace: Optional[str] = None, 
+    def execute_command(self, pod_name: str, command: List[str], namespace: str, 
                         container: Optional[str] = None) -> Dict[str, Any]:
         """Execute a command in a pod.
         

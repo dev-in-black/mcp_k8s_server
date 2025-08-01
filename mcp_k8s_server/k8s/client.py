@@ -100,7 +100,7 @@ class K8sClient:
         return os.path.expanduser("~/.kube/config")
 
     def list_custom_resources(self, group: str, version: str, plural: str, 
-                             namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+                             namespace: str) -> List[Dict[str, Any]]:
         """List custom resources.
         
         Args:
@@ -135,7 +135,7 @@ class K8sClient:
             return []
 
     def get_custom_resource(self, group: str, version: str, plural: str, name: str, 
-                           namespace: Optional[str] = None) -> Optional[Dict[str, Any]]:
+                           namespace: str) -> Optional[Dict[str, Any]]:
         """Get a custom resource.
         
         Args:
@@ -182,7 +182,7 @@ class K8sClient:
             logger.error(f"Error getting namespaces: {e}")
             return []
 
-    def get_pods(self, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_pods(self, namespace: str) -> List[Dict[str, Any]]:
         """Get all pods in a namespace.
         
         Args:
@@ -202,7 +202,7 @@ class K8sClient:
             logger.error(f"Error getting pods: {e}")
             return []
 
-    def get_pod(self, name: str, namespace: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    def get_pod(self, name: str, namespace: str) -> Optional[Dict[str, Any]]:
         """Get a pod by name.
         
         Args:
@@ -223,7 +223,7 @@ class K8sClient:
                 logger.error(f"Error getting pod {name}: {e}")
             return None
 
-    def get_pod_logs(self, name: str, namespace: Optional[str] = None, container: Optional[str] = None, 
+    def get_pod_logs(self, name: str, namespace: str, container: Optional[str] = None, 
                      tail_lines: int = 100) -> str:
         """Get logs for a pod.
         
@@ -245,7 +245,7 @@ class K8sClient:
             logger.error(f"Error getting logs for pod {name}: {e}")
             return f"Error getting logs: {e}"
 
-    def get_deployments(self, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_deployments(self, namespace: str) -> List[Dict[str, Any]]:
         """Get all deployments in a namespace.
         
         Args:
@@ -265,7 +265,7 @@ class K8sClient:
             logger.error(f"Error getting deployments: {e}")
             return []
 
-    def get_deployment(self, name: str, namespace: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    def get_deployment(self, name: str, namespace: str) -> Optional[Dict[str, Any]]:
         """Get a deployment by name.
         
         Args:
@@ -286,7 +286,7 @@ class K8sClient:
                 logger.error(f"Error getting deployment {name}: {e}")
             return None
 
-    def get_services(self, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_services(self, namespace: str) -> List[Dict[str, Any]]:
         """Get all services in a namespace.
         
         Args:
@@ -306,7 +306,7 @@ class K8sClient:
             logger.error(f"Error getting services: {e}")
             return []
 
-    def get_service(self, name: str, namespace: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    def get_service(self, name: str, namespace: str) -> Optional[Dict[str, Any]]:
         """Get a service by name.
         
         Args:
@@ -391,7 +391,7 @@ class K8sClient:
                 logger.error(f"Error getting persistent volume {name}: {e}")
             return None
 
-    def get_persistent_volume_claims(self, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_persistent_volume_claims(self, namespace: str) -> List[Dict[str, Any]]:
         """Get all persistent volume claims in a namespace.
         
         Args:
@@ -411,7 +411,7 @@ class K8sClient:
             logger.error(f"Error getting persistent volume claims: {e}")
             return []
 
-    def get_persistent_volume_claim(self, name: str, namespace: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    def get_persistent_volume_claim(self, name: str, namespace: str) -> Optional[Dict[str, Any]]:
         """Get a persistent volume claim by name.
         
         Args:
@@ -432,7 +432,7 @@ class K8sClient:
                 logger.error(f"Error getting persistent volume claim {name}: {e}")
             return None
 
-    def get_events(self, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_events(self, namespace: str) -> List[Dict[str, Any]]:
         """Get all events in a namespace.
         
         Args:
@@ -452,7 +452,7 @@ class K8sClient:
             logger.error(f"Error getting events: {e}")
             return []
 
-    def get_resource_events(self, kind: str, name: str, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_resource_events(self, kind: str, name: str, namespace: str) -> List[Dict[str, Any]]:
         """Get events for a specific resource.
         
         Args:

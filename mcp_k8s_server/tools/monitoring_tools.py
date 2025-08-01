@@ -76,7 +76,7 @@ def register_monitoring_tools(mcp: FastMCP, k8s_monitoring: K8sMonitoring) -> No
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_pod_status(name: Optional[str] = None, namespace: Optional[str] = None) -> str:
+    def get_pod_status(name: Optional[str] = None, namespace: str= None) -> str:
         """Get the status of a pod or all pods.
         
         Args:
@@ -97,7 +97,7 @@ def register_monitoring_tools(mcp: FastMCP, k8s_monitoring: K8sMonitoring) -> No
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_deployment_status(name: Optional[str] = None, namespace: Optional[str] = None) -> str:
+    def get_deployment_status(name: Optional[str] = None, namespace: str= None) -> str:
         """Get the status of a deployment or all deployments.
         
         Args:
@@ -118,7 +118,7 @@ def register_monitoring_tools(mcp: FastMCP, k8s_monitoring: K8sMonitoring) -> No
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_resource_metrics(kind: str, name: str, namespace: Optional[str] = None) -> str:
+    def get_resource_metrics(kind: str, name: str, namespace: str) -> str:
         """Get metrics for a specific resource.
         
         Args:

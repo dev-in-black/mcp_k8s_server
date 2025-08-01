@@ -149,7 +149,7 @@ class K8sMonitoring:
             return self._resource_status["nodes"].get(name, {})
         return {name: status for name, status in self._resource_status["nodes"].items()}
 
-    def get_pod_status(self, name: Optional[str] = None, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def get_pod_status(self, name: Optional[str] = None, namespace: str = None) -> Dict[str, Any]:
         """Get the status of a pod or all pods.
         
         Args:
@@ -174,7 +174,7 @@ class K8sMonitoring:
             if name.startswith(f"{namespace}/")
         }
 
-    def get_deployment_status(self, name: Optional[str] = None, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def get_deployment_status(self, name: Optional[str] = None, namespace: str = None) -> Dict[str, Any]:
         """Get the status of a deployment or all deployments.
         
         Args:
@@ -199,7 +199,7 @@ class K8sMonitoring:
             if name.startswith(f"{namespace}/")
         }
 
-    def get_resource_metrics(self, kind: str, name: str, namespace: Optional[str] = None) -> Dict[str, Any]:
+    def get_resource_metrics(self, kind: str, name: str, namespace: str) -> Dict[str, Any]:
         """Get metrics for a specific resource.
         
         Args:

@@ -77,7 +77,7 @@ def register_operation_tools(mcp: FastMCP, k8s_operations: K8sOperations) -> Non
             return json.dumps({"success": False, "message": str(e)})
     
     @mcp.tool()
-    def delete_resource(resource_type: str, name: str, namespace: Optional[str] = None) -> str:
+    def delete_resource(resource_type: str, name: str, namespace: str) -> str:
         """Delete a resource.
         
         Args:
@@ -99,7 +99,7 @@ def register_operation_tools(mcp: FastMCP, k8s_operations: K8sOperations) -> Non
             return json.dumps({"success": False, "message": str(e)})
     
     @mcp.tool()
-    def scale_deployment(name: str, replicas: int, namespace: Optional[str] = None) -> str:
+    def scale_deployment(name: str, replicas: int, namespace: str) -> str:
         """Scale a deployment.
         
         Args:
@@ -121,7 +121,7 @@ def register_operation_tools(mcp: FastMCP, k8s_operations: K8sOperations) -> Non
             return json.dumps({"success": False, "message": str(e)})
     
     @mcp.tool()
-    def restart_deployment(name: str, namespace: Optional[str] = None) -> str:
+    def restart_deployment(name: str, namespace: str) -> str:
         """Restart a deployment.
         
         Args:
@@ -142,7 +142,7 @@ def register_operation_tools(mcp: FastMCP, k8s_operations: K8sOperations) -> Non
             return json.dumps({"success": False, "message": str(e)})
     
     @mcp.tool()
-    def execute_command_on_pod(pod_name: str = None, command: str = None, namespace: Optional[str] = None, 
+    def execute_command_on_pod(pod_name: str = None, command: str = None, namespace: str =None, 
                         container: Optional[str] = None, value: Any = None) -> str:
         """Execute a command in a pod
         

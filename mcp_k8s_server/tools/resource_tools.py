@@ -37,7 +37,7 @@ def register_resource_tools(mcp: FastMCP, k8s_client: K8sClient) -> None:
     """
     
     @mcp.tool()
-    def get_resources(resource_type: str, namespace: Optional[str] = None) -> str:
+    def get_resources(resource_type: str, namespace: str) -> str:
         """Get a list of resources of a specific type.
         
         Args:
@@ -78,7 +78,7 @@ def register_resource_tools(mcp: FastMCP, k8s_client: K8sClient) -> None:
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_resource(resource_type: str, name: str, namespace: Optional[str] = None) -> str:
+    def get_resource(resource_type: str, name: str, namespace: str) -> str:
         """Get detailed information about a specific resource.
         
         Args:
@@ -118,7 +118,7 @@ def register_resource_tools(mcp: FastMCP, k8s_client: K8sClient) -> None:
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_resource_status(resource_type: str, name: str, namespace: Optional[str] = None) -> str:
+    def get_resource_status(resource_type: str, name: str, namespace: str) -> str:
         """Get the status of a specific resource.
         
         Args:
@@ -161,7 +161,7 @@ def register_resource_tools(mcp: FastMCP, k8s_client: K8sClient) -> None:
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_resource_events(resource_type: str, name: str, namespace: Optional[str] = None) -> str:
+    def get_resource_events(resource_type: str, name: str, namespace: str) -> str:
         """Get events related to a specific resource.
         
         Args:
@@ -183,7 +183,7 @@ def register_resource_tools(mcp: FastMCP, k8s_client: K8sClient) -> None:
             return json.dumps({"error": str(e)})
     
     @mcp.tool()
-    def get_pod_logs(name: str, namespace: Optional[str] = None, container: Optional[str] = None, 
+    def get_pod_logs(name: str, namespace: str, container: Optional[str] = None, 
                      tail_lines: int = 100) -> str:
         """Get logs for a pod.
         

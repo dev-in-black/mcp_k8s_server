@@ -49,11 +49,7 @@ def create_server(config: Optional[Config] = None) -> FastMCP:
     mcp = FastMCP(
         config.server.name,
         host=config.server.host,
-        port=config.server.port,
-        settings={
-            "initialization_timeout": 10.0, # 10 second timeout
-            "log_level": "debug"
-        }  
+        port=config.server.port
     )
     
     # Create the Kubernetes client

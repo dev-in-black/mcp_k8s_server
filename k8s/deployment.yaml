@@ -59,3 +59,143 @@ spec:
       - name: config-volume
         configMap:
           name: mcp-k8s-server-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-k8s-server
+  labels:
+    app: mcp-k8s-server
+spec:
+  selector:
+    app: mcp-k8s-server
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  type: NodePort
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mcp-k8s-server
+  labels:
+    app: mcp-k8s-server
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mcp-k8s-server
+  labels:
+    app: mcp-k8s-server
+rules:
+# Allow read access to most resources
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets", "namespaces", "nodes", "persistentvolumes", "persistentvolumeclaims", "events"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["pods", "nodes"]
+  verbs: ["get", "list"]
+# Allow operations on resources
+- apiGroups: [""]
+  resources: ["pods", "pods/exec", "pods/log"]
+  verbs: ["create", "delete", "deletecollection", "patch", "update"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets", "daemonsets"]
+  verbs: ["create", "delete", "deletecollection", "patch", "update"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["create", "delete", "deletecollection", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: mcp-k8s-server
+  labels:
+    app: mcp-k8s-server
+subjects:
+- kind: ServiceAccount
+  name: mcp-k8s-server
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: mcp-k8s-server
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mcp-k8s-server-config
+  labels:
+    app: mcp-k8s-server
+data:
+  config.yaml: |
+    # MCP Kubernetes Server Configuration
+
+    server:
+      name: mcp-k8s-server
+      transport: sse
+      port: 8000
+      host: 0.0.0.0
+
+    kubernetes:
+      # Path to kubeconfig file
+      # If empty, will try to use in-cluster config when running in Kubernetes
+      # or ~/.kube/config when running locally
+      config_path: " /etc/rancher/rke2/rke2.yaml"
+      
+      # Kubernetes context to use
+      # If empty, will use the current context from kubeconfig
+      context: ""
+      
+      # Default namespace
+      namespace: default
+      
+      # Resource types to include
+      resource_types:
+        - pods
+        - deployments
+        - services
+        - configmaps
+        - secrets
+        - persistentvolumeclaims
+        - persistentvolumes
+        - nodes
+        - namespaces
+        - events
+        - ingresses
+        - statefulsets
+        - daemonsets
+        - jobs
+        - cronjobs
+        - replicasets
+
+    monitoring:
+      # Enable monitoring features
+      enabled: true
+      
+      # Polling interval in seconds
+      interval: 30
+      
+      # Resources to monitor
+      resources:
+        - pods
+        - nodes
+        - deployments
+        
+      # Metrics to collect
+      metrics:
+        - cpu
+        - memory
+        - disk
+        - network
